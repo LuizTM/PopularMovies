@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PopularMovies</string>
+    <string name="detail_title">Title:</string>
+    <string name="detail_rating">Rating:</string>
+    <string name="detail_release_date">Release Date:</string>
+    <string name="detail_description">Description:</string>
+    <string name="home_btn_retry">Retry</string>
+</resources>
