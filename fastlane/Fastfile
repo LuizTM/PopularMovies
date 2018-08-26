@@ -80,7 +80,8 @@ def upload_to_hockeyapp
 
     hockey(
       api_token: "921030b600314fbcb88574002d59fa6b",
-      apk: "/Users/luiztadeu/Desktop/Nanodegree/PopularMoviesFastlane/app/build/outputs/apk/debug/app-debug.apk",
+      apk: ENV["PATH_APK"],
+      #"/Users/luiztadeu/Desktop/Nanodegree/PopularMoviesFastlane/app/build/outputs/apk/debug/app-debug.apk",
       notes: "Changes: " + " " + last_git_commit[:message]
     )
 
