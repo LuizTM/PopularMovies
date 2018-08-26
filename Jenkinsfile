@@ -1,7 +1,8 @@
-stage 'Checkout'
- node('slave') {
+node {
+ stage('Checkout') {
   deleteDir()
   checkout scm
+ }
  }
 //stage 'Checkout'
 //	node ('slave'){
