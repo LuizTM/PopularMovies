@@ -14,7 +14,6 @@
 # update_fastlane
 
 default_platform(:android)
-
 platform :android do
   desc "Runs all the tests"
   lane :test do
@@ -28,34 +27,31 @@ platform :android do
   desc "build debug"
   lane :buildDebug do
       begin
-          test
-          gradle(task: "assembleDebug")
-          on_msg_success
-          upload_to_hockeyapp
+          on_build_debug
       rescue => exception
           on_error(exception)
       end
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
+  desc "Upload app to HockeyApp Squad"
+  lane :uploadToHockeyApp do
+       begin
+            upload_to_hockeyapp
+            on_msg_success
+       rescue => exception
+            on_error(exception)
+       end
+   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
-  end
 end
 
 
 def on_test
     gradle(task: "clean test")
+end
+
+def on_build_debug
+    gradle(task: "assembleDebug")
 end
 
 
