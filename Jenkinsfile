@@ -6,20 +6,20 @@
 // }
 node {
 	stage ('Checkout and Setup'){
-  deleteDir()
-  checkout scm
+  		deleteDir()
+  		checkout scm
 		sh 'cd fastlane'
 	}
 	stage ('Test'){
-		sh 'fastlane test'
+		bundle exec fastlane test
 	}
 	stage ('Build'){
 // 		def build_number = env.BUILD_NUMBER
 // 		sh "fastlane build build_number:${build_number}"
-        sh 'fastlane buildDebug'
+        	bundle exec fastlane buildDebug
 	}
 	stage ('Upload Hockeyapp'){
 // 		archive 'reports/, dist/'
-		sh 'fastlane uploadToHockeyApp'
+		bundle exec fastlane uploadToHockeyApp
 	}
 }
