@@ -46,6 +46,15 @@ platform :android do
 end
 
 
+    error do |lane, exception|
+        slack(
+            message: "Something went wrong with the deployment.",
+            success: false,
+            payload: { "Error Info" => exception.error_info.to_s }
+        )
+    end
+
+
 def on_test
     gradle(task: "clean test")
 end
