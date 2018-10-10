@@ -3,7 +3,6 @@ package com.luiztadeu.popularmovies.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -120,6 +119,10 @@ public class HomeMoviesActivity extends AppCompatActivity
             case R.id.menu_movies_top_rated:
                 callMoviesTopRated();
                 return true;
+            case R.id.menu_movies_favority:
+                //Todo make list favorities\\
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -127,8 +130,8 @@ public class HomeMoviesActivity extends AppCompatActivity
 
     @Override
     public void onClickListenerList(Result result) {
-        Intent intent = new Intent(this, DetailMovieAcivity.class);
-        intent.putExtra(DetailMovieAcivity.EXTRA_DETAIL_MOVIE, result);
+        Intent intent = new Intent(this, DetailMovieActivity.class);
+        intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, result);
         startActivityForResult(intent, HomeMoviesActivity.REQUEST_CODE_RESULT);
     }
 

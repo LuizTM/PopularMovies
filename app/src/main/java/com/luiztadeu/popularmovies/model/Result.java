@@ -51,6 +51,11 @@ public class Result implements Serializable {
     @Expose
     public String releaseDate;
 
+
+    public Integer getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
