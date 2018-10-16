@@ -3,15 +3,12 @@ package com.luiztadeu.popularmovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.luiztadeu.popularmovies.NetworkUtils.DAO.IMovies;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Result implements Parcelable, IMovies {
+public class Result implements Parcelable {
 
     @SerializedName("vote_count")
     public Integer voteCount;
@@ -48,14 +45,15 @@ public class Result implements Parcelable, IMovies {
                   Double voteAverage,
                   String title,
                   String posterPath,
+                  String releaseDate,
                   String overview,
                   boolean savedDb) {
 
         this.id = id;
         this.voteAverage = voteAverage;
         this.title = title;
-        this.popularity = popularity;
         this.posterPath = posterPath;
+        this.releaseDate = releaseDate;
         this.overview = overview;
         this.savedDb = savedDb;
     }
@@ -78,11 +76,6 @@ public class Result implements Parcelable, IMovies {
 
     public String getPosterPath() {
         return posterPath;
-    }
-
-    @Override
-    public boolean isSaveDb() {
-        return false;
     }
 
     public String getOriginalTitle() {

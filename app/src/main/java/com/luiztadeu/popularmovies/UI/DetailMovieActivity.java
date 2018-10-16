@@ -81,7 +81,7 @@ public class DetailMovieActivity extends AppCompatActivity
                 .resize(500, 300)
                 .into(imgPoster);
 
-        txtTitle.setText(String.format("%s", movie.getOriginalTitle()));
+        txtTitle.setText(String.format("%s", movie.getTitle()));
         txtRating.setText(String.format("Rating: %s", movie.getVoteAverage()));
         txtReleaseDate.setText(String.format("Date: %s", movie.getReleaseDate()));
         txtDescription.setText(String.format("Description: %s", movie.getOverview()));
@@ -90,7 +90,7 @@ public class DetailMovieActivity extends AppCompatActivity
     private void getBundleExtras() {
         if (getIntent() != null
                 && getIntent().getExtras() != null) {
-            movie = (Result) getIntent().getExtras().getSerializable(EXTRA_DETAIL_MOVIE);
+            movie = getIntent().getExtras().getParcelable(EXTRA_DETAIL_MOVIE);
         }
     }
 

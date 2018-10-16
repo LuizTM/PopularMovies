@@ -13,6 +13,7 @@ import com.luiztadeu.popularmovies.R;
 import com.luiztadeu.popularmovies.UI.HomeView;
 import com.luiztadeu.popularmovies.model.Result;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class MoviesAdapter
@@ -49,7 +50,7 @@ public class MoviesAdapter
                 .placeholder(android.R.drawable.star_off)
                 .into(holder.imagePoster);
 
-        holder.imgAddFavorite.setImageResource(movie.isSaveDb() ?
+        holder.imgAddFavorite.setImageResource(movie.isSavedDb() ?
                 android.R.drawable.star_big_on : android.R.drawable.star_big_off);
 
         holder.imagePoster.setOnClickListener(new View.OnClickListener() {
@@ -62,9 +63,15 @@ public class MoviesAdapter
         holder.imgAddFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                movie.setSavedDb(true);
-                actionClickListListener.onAddFavorites(movie);
-                holder.imgAddFavorite.setImageResource(android.R.drawable.star_big_on);
+                if (movie.isSavedDb()) {
+                    movie.setSavedDb(false);
+                    actionClickListListener.onDeleteFavorite(movie);
+                    holder.imgAddFavorite.setImageResource(android.R.drawable.star_big_off);
+                } else {
+                    movie.setSavedDb(true);
+                    actionClickListListener.onAddFavorites(movie);
+                    holder.imgAddFavorite.setImageResource(android.R.drawable.star_big_on);
+                }
             }
         });
     }

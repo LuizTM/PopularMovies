@@ -33,6 +33,8 @@ public class HomeMoviesActivity extends AppCompatActivity
     private static final String BUNDLE_MOVIES = "movies";
     public static final int REQUEST_CODE_RESULT = 0;
 
+    private boolean isFavorite = false;
+
     private RecyclerView mRecyclerView;
     private List<Result> movies;
     private MoviesRepository mRepository;
@@ -44,25 +46,27 @@ public class HomeMoviesActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_movies);
-        if (savedInstanceState != null)
+        initViews();
+        if (savedInstanceState != null) {
             movies = savedInstanceState.getParcelableArrayList(BUNDLE_MOVIES);
+        }
 
         viewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
 
         viewModel.getItemFavoritesMovies().observe(this, new Observer<List<FavoritesModel>>() {
             @Override
             public void onChanged(@Nullable List<FavoritesModel> results) {
-                //Todo\\
+                if (adapter != null)
+                    callMoviesFavorites();
             }
         });
 
-        initViews();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(BUNDLE_MOVIES, (Parcelable) movies);
+        outState.putParcelableArrayList(BUNDLE_MOVIES, (ArrayList<? extends Parcelable>) movies);
     }
 
     private void initViews() {
@@ -132,12 +136,15 @@ public class HomeMoviesActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_movies_popular:
+                isFavorite = false;
                 callMoviesPopular();
                 return true;
             case R.id.menu_movies_top_rated:
+                isFavorite = false;
                 callMoviesTopRated();
                 return true;
             case R.id.menu_movies_favority:
+                isFavorite = true;
                 callMoviesFavorites();
                 return true;
 
@@ -150,16 +157,18 @@ public class HomeMoviesActivity extends AppCompatActivity
         List<FavoritesModel> favorites = viewModel.getItemFavoritesMovies().getValue();
         List<Result> results = new ArrayList<>();
         assert favorites != null;
-        for (FavoritesModel model: favorites) {
+        for (FavoritesModel model : favorites) {
             results.add(new Result(model.getId(),
                     model.getVoteAverage(),
                     model.getTitle(),
                     model.getPosterPath(),
+                    model.getReleaseDate(),
                     model.getOverview(),
                     model.isSaveDb()));
         }
 
-        adapter.onChangeFavorites(results);
+        if (isFavorite)
+            adapter.onChangeFavorites(results);
     }
 
     @Override
@@ -176,8 +185,21 @@ public class HomeMoviesActivity extends AppCompatActivity
                 result.getVoteAverage(),
                 result.getOverview(),
                 result.getPosterPath(),
-                result.isSaveDb());
+                result.getReleaseDate(),
+                result.isSavedDb());
         viewModel.addItem(model);
+    }
+
+    @Override
+    public void onDeleteFavorite(Result result) {
+        final FavoritesModel model = new FavoritesModel(result.getId(),
+                result.getTitle(),
+                result.getVoteAverage(),
+                result.getOverview(),
+                result.getPosterPath(),
+                result.getReleaseDate(),
+                result.isSavedDb());
+        viewModel.deleteItem(model);
     }
 
     @Override
@@ -202,5 +224,13 @@ public class HomeMoviesActivity extends AppCompatActivity
     public void hideLoading() {
         if (mLoadingProgressBar != null)
             mLoadingProgressBar.hide();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (isFavorite){
+            isFavorite = false;
+        }
     }
 }

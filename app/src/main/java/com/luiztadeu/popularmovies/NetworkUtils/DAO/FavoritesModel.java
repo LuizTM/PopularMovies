@@ -13,6 +13,7 @@ public class FavoritesModel{
     private String overview;
     private String posterPath;
     private boolean saveDb;
+    private String releaseDate;
 
     public FavoritesModel(boolean sabeDb) {
         this.saveDb = sabeDb;
@@ -23,12 +24,14 @@ public class FavoritesModel{
                           Double voteAverage,
                           String overview,
                           String posterPath,
+                          String releaseDate,
                           boolean saveDb) {
         this.id = id;
         this.title = title;
         this.voteAverage = voteAverage;
         this.overview = overview;
         this.posterPath = posterPath;
+        this.releaseDate = releaseDate;
         this.saveDb = saveDb;
 
     }
@@ -51,6 +54,10 @@ public class FavoritesModel{
 
     public String getPosterPath() {
         return posterPath;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     public boolean isSaveDb() {

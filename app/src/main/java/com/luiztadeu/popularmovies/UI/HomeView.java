@@ -17,5 +17,7 @@ public interface HomeView {
     interface ActionClickListListener{
         void onClickListenerList(Result result);
         void onAddFavorites(Result result);
+
+        void onDeleteFavorite(Result movie);
     }
 }
