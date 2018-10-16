@@ -1,6 +1,8 @@
 package com.luiztadeu.popularmovies.UI.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,11 +46,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
          ViewHolder(View itemView) {
             super(itemView);
             author = itemView.findViewById(android.R.id.text1);
+            author.setTextColor(ContextCompat.getColor(itemView.getContext(), android.R.color.black));
             review = itemView.findViewById(android.R.id.text2);
         }
 
         void bind(int position){
-            String nameAuthor = movieReviews.getResults().get(position).getAuthor();
+            String nameAuthor = movieReviews.getResults().get(position).getAuthor().concat(":");
             String reviewAuthor = movieReviews.getResults().get(position).getContent();
             author.setText(nameAuthor);
             review.setText(reviewAuthor);

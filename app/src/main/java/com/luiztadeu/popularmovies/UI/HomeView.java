@@ -1,13 +1,12 @@
 package com.luiztadeu.popularmovies.UI;
-
-import com.luiztadeu.popularmovies.model.Movie;
 import com.luiztadeu.popularmovies.model.Result;
+import java.util.List;
 
 public interface HomeView {
 
     void showLoading();
     void hideLoading();
-    void populateView(Movie movies);
+    void populateView(List<Result> movies);
 
     void callMoviesPopular();
     void callMoviesTopRated();
@@ -17,5 +16,6 @@ public interface HomeView {
 
     interface ActionClickListListener{
         void onClickListenerList(Result result);
+        void onAddFavorites(Result result);
     }
 }

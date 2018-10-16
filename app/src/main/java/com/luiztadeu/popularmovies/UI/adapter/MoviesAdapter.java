@@ -1,9 +1,7 @@
 package com.luiztadeu.popularmovies.UI.adapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,19 +11,20 @@ import android.widget.ImageView;
 import com.luiztadeu.popularmovies.BuildConfig;
 import com.luiztadeu.popularmovies.R;
 import com.luiztadeu.popularmovies.UI.HomeView;
-import com.luiztadeu.popularmovies.model.Movie;
 import com.luiztadeu.popularmovies.model.Result;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
+public class MoviesAdapter
+        extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
 
     private List<Result> movies;
     private HomeView.ActionClickListListener actionClickListListener;
     private Context context;
 
-    public MoviesAdapter(List<Result> movies, HomeView.ActionClickListListener actionClickListListener, Context context) {
+    public MoviesAdapter(List<Result> movies,
+                         HomeView.ActionClickListListener actionClickListListener,
+                         Context context) {
         this.movies = movies;
         this.actionClickListListener = actionClickListListener;
         this.context = context;
@@ -40,7 +39,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Result movie = movies.get(position);
         Picasso.with(context)
                 .load(BuildConfig.enpointImgMoviesW185
@@ -50,11 +49,22 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
                 .placeholder(android.R.drawable.star_off)
                 .into(holder.imagePoster);
 
+        holder.imgAddFavorite.setImageResource(movie.isSaveDb() ?
+                android.R.drawable.star_big_on : android.R.drawable.star_big_off);
 
         holder.imagePoster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 actionClickListListener.onClickListenerList(movie);
+            }
+        });
+
+        holder.imgAddFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movie.setSavedDb(true);
+                actionClickListListener.onAddFavorites(movie);
+                holder.imgAddFavorite.setImageResource(android.R.drawable.star_big_on);
             }
         });
     }
@@ -64,14 +74,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         return movies.size();
     }
 
+    public void onChangeFavorites(List<Result> favorites) {
+        movies = favorites;
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imagePoster;
+        ImageView imgAddFavorite;
 
         ViewHolder(View itemView) {
             super(itemView);
             imagePoster = itemView.findViewById(R.id.img_movies_poster);
+            imgAddFavorite = itemView.findViewById(R.id.img_add_favorite);
         }
     }
-
 }
