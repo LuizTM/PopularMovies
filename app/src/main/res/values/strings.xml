@@ -5,4 +5,9 @@
     <string name="detail_release_date">Release Date:</string>
     <string name="detail_description">Description:</string>
     <string name="home_btn_retry">Retry</string>
+    <string name="type_popular">Popular</string>
+    <string name="type_top_rated">Top rated</string>
+    <string name="type_favority">Favority</string>
+    <string name="title_trailer_detail_activity">Trailer:</string>
+    <string name="title_reviews_detail_activity">Reviews:</string>
 </resources>
