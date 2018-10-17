@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/movies_recycle_view"
@@ -14,13 +12,6 @@
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:spanCount="2"
         tools:listitem="@layout/adapter_list_grid_movies" />
-
-    <android.support.v4.widget.ContentLoadingProgressBar
-        android:id="@+id/address_looking_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:theme="?android:attr/progressBarStyleLarge" />
 
     <LinearLayout
         android:id="@+id/movies_linear_connection_off"

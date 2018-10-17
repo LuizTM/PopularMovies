@@ -44,7 +44,7 @@ public class MoviesRepository implements IMoviesRepository {
             @Override
             public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
                 Movie popular = response.body();
-                mPresenter.populateView(popular);
+                mPresenter.populateView(popular.getResults());
             }
 
             @Override
@@ -60,7 +60,7 @@ public class MoviesRepository implements IMoviesRepository {
             @Override
             public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
                 Movie topRated = response.body();
-                mPresenter.populateView(topRated);
+                mPresenter.populateView(topRated.getResults());
             }
 
             @Override
