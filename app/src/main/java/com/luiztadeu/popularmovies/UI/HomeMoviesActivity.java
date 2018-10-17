@@ -10,6 +10,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,8 +34,6 @@ public class HomeMoviesActivity extends AppCompatActivity
     private static final String BUNDLE_MOVIES = "movies";
     public static final int REQUEST_CODE_RESULT = 0;
 
-    private boolean isFavorite = false;
-
     private RecyclerView mRecyclerView;
     private List<Result> movies;
     private MoviesRepository mRepository;
@@ -50,17 +49,13 @@ public class HomeMoviesActivity extends AppCompatActivity
         if (savedInstanceState != null) {
             movies = savedInstanceState.getParcelableArrayList(BUNDLE_MOVIES);
         }
-
         viewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
-
         viewModel.getItemFavoritesMovies().observe(this, new Observer<List<FavoritesModel>>() {
             @Override
-            public void onChanged(@Nullable List<FavoritesModel> results) {
-                if (adapter != null)
-                    callMoviesFavorites();
+            public void onChanged(@Nullable List<FavoritesModel> favoritesModels) {
+                Log.i("HomeMoviesActivity", "observeCalling");
             }
         });
-
     }
 
     @Override
@@ -136,15 +131,12 @@ public class HomeMoviesActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_movies_popular:
-                isFavorite = false;
                 callMoviesPopular();
                 return true;
             case R.id.menu_movies_top_rated:
-                isFavorite = false;
                 callMoviesTopRated();
                 return true;
             case R.id.menu_movies_favority:
-                isFavorite = true;
                 callMoviesFavorites();
                 return true;
 
@@ -154,28 +146,15 @@ public class HomeMoviesActivity extends AppCompatActivity
     }
 
     private void callMoviesFavorites() {
-        List<FavoritesModel> favorites = viewModel.getItemFavoritesMovies().getValue();
-        List<Result> results = new ArrayList<>();
-        assert favorites != null;
-        for (FavoritesModel model : favorites) {
-            results.add(new Result(model.getId(),
-                    model.getVoteAverage(),
-                    model.getTitle(),
-                    model.getPosterPath(),
-                    model.getReleaseDate(),
-                    model.getOverview(),
-                    model.isSaveDb()));
-        }
-
-        if (isFavorite)
-            adapter.onChangeFavorites(results);
+        Intent intent = new Intent(this, FavoritesActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onClickListenerList(Result result) {
         Intent intent = new Intent(this, DetailMovieActivity.class);
         intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, result);
-        startActivityForResult(intent, HomeMoviesActivity.REQUEST_CODE_RESULT);
+        startActivity(intent);
     }
 
     @Override
@@ -224,13 +203,5 @@ public class HomeMoviesActivity extends AppCompatActivity
     public void hideLoading() {
         if (mLoadingProgressBar != null)
             mLoadingProgressBar.hide();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (isFavorite){
-            isFavorite = false;
-        }
     }
 }

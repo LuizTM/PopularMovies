@@ -6,7 +6,7 @@
 
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/ic_local_movies_green"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_local_movies_green"
@@ -26,6 +26,8 @@
 
         <activity android:name=".UI.DetailMovieActivity"
             android:label="Detail"/>
+        <activity android:name=".UI.FavoritesActivity"
+            android:label="Favorite"/>
 
     </application>
 </manifest>
