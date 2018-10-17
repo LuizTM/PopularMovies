@@ -17,7 +17,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "appKey", "\"b38ca3e3e806ecd63d5c23f4ab3233d0\"")
+            buildConfigField("String", "appKey", "\"[YOUR APP_KEY]\"")
             buildConfigField("String", "enpointMovies", "\"http://api.themoviedb.org/\"")
             buildConfigField("String", "enpointImgMoviesW185", "\"http://image.tmdb.org/t/p/w185/\"")
             buildConfigField("String", "enpointImgMoviesW500", "\"http://image.tmdb.org/t/p/w500/\"")
@@ -27,7 +27,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "appKey", "\"b38ca3e3e806ecd63d5c23f4ab3233d0\"")
+            buildConfigField("String", "appKey", "\"[YOUR APP_KEY]\"")
             buildConfigField("String", "enpointMovies", "\"http://api.themoviedb.org/\"")
             buildConfigField("String", "enpointImgMoviesW185", "\"http://image.tmdb.org/t/p/w185/\"")
             buildConfigField("String", "enpointImgMoviesW500", "\"http://image.tmdb.org/t/p/w500/\"")
